@@ -83,7 +83,7 @@ MergedData <- rbind(Xtest_2, Xtrain_2)
 ##### QUESTION 2: Extracts only the measurements on the mean and standard deviation for each measurement.
 *Include any field header which contains either "mean(" or "std(" or "subject" or "activity"
 (last 2 options to include activityID and subjectID fields)
-Once all relevant fields are extracted in Mean_STd variable, a data.frame is created with the 68 fields selected and assigned to MergedData2*
+Once all relevant fields are extracted (using the Mean_Std variable), a data.frame is created with the 68 fields selected and assigned to MergedData2*
 
 Mean_Std <- grepl("subject", names(MergedData), fixed=TRUE) | grepl("activity", names(MergedData), fixed=TRUE) | grepl("mean(", names(MergedData), fixed=TRUE) | grepl("std(", names(MergedData), fixed=TRUE)
 
