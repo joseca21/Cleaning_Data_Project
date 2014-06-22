@@ -1,0 +1,135 @@
+Codebook
+========
+
+
+FIELDS INCLUDED IN 'AGGREGATED' TIDY FILE SUBMITTED
+---------------------------------------------------
+
+The fields included in the tidy dataset submitted average both means and standard deviations for: 
+- time domain signals (prefix 't' to denote time), which includes some 3-axial raw signals (XYZ)
+- frequency domain signals (prefix 'f' to indicate frequency), which also includes some 3-axial raw signals (XYZ)
+
+1) The fields used to aggregate the average doamin signals are:
+- Activity Name - Each person performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) 
+                  wearing a smartphone (Samsung Galaxy S II) on the waist. 
+- Subject ID - The experiments have been carried out with a group of 30 volunteers within an age bracket of 19-48 years.
+               
+2) The time domain signals (aggregated by their average mean or standard deviation) are as follows: 
+- tBodyAcc-XYZ
+- tGravityAcc-XYZ
+- tBodyAccJerk-XYZ
+- tBodyGyro-XYZ
+- tBodyGyroJerk-XYZ
+- tBodyAccMag
+- tGravityAccMag
+- tBodyAccJerkMag
+- tBodyGyroMag
+- tBodyGyroJerkMag
+** Please note '-XYZ' is used to denote 3-axial signals in the X, Y and Z directions for some of above signals.
+
+3) The frequency domain signals (aggregated by their average mean or standard deviation) are as follows: 
+fBodyAcc-XYZ
+fBodyAccJerk-XYZ
+fBodyGyro-XYZ
+fBodyAccMag
+fBodyAccJerkMag
+fBodyGyroMag
+fBodyGyroJerkMag
+** Please note '-XYZ' is used to denote 3-axial signals in the X, Y and Z directions for some of the above signals.
+
+
+
+
+TRANSFORMATIONS(see '*' below) AND VARIABLES USED (see '#' below)
+-------------------------------------
+
+
+1) QUESTION 1:
+
+
+TEST SET
+
+# Xtest_1: Data.frame containing Test set from 'test/X_test.txt' (exludes headers)
+# Header_Train_Test: Data.frame containing List of all features (headers for Test/Train data) from 'features.txt'
+# T_Header_Train_Set: Data.frame containing transpose 2nd column -column $V2- of Header_Train_Test. 
+                      Data transposed from rows to columns.
+
+* Transposed headers (i.e. T_Header_Train_Set) were added to initial Test set (i.e. Xtest_1) using colnames(Xtest_1) <- T_Header_Train_Set
+
+# ytest_1: Data.frame containing the activity IDs for Test set from 'test/y_test.txt' (excluding headers)
+# subjecttest_1: Data.frame containing subjects who peformed activities measured in Test set. Extracted from 'test/subject_test.txt' (exc. headers)
+
+# test_subj_activ: Data.frame containing merged Subject IDs (subjecttest_1) with Activity IDs (ytest_1) 
+
+* Activity and subject descriptive headers were added to test_subj_activ data.frame using colnames(test_subj_activ) <- c("subjectID","activityID")
+
+# Xtest_2: Data.frame containing merged Activity and subject IDs (test_subj_activ) with Test set (Xtest_1). This is the final test dataset.
+
+
+TRAINING SET
+
+# Xtrain_1: Data.frame containing Test set from 'train/X_train.txt'  (exludes headers)
+
+* Transposed headers (i.e. T_Header_Train_Set) are added to initial Training set (i.e. Xtrain_1) using colnames(Xtrain_1) <- T_Header_Train_Set
+
+# ytrain_1: Data.frame containing the activity IDs for Training set from 'train/y_train.txt'  (excluding headers)
+# subjecttrain_1: Data.frame containing subjects who peformed activities measured in Training set. Extracted from 'train/subject_train.txt'  (exc. headers)
+
+# train_subj_activ: Data.frame containing merged Subject IDs (subjecttrain_1) with Activity IDs (ytrain_1) 
+
+* Activity and subject descriptive headers are added to train_subj_activ data.frame using colnames(train_subj_activ) <- c("subjectID","activityID")
+
+# Xtrain_2: Data.frame containing merged Activity and subject IDs (train_subj_activ) with Training set (Xtrain_1). This is the final training dataset.
+
+
+MERGED FILE WITH HEADERS (Test + Training set)
+
+# MergedData: Data.frame containing Merged Test and Training Data Sets (it includes headers). It has 10,299 rows and 563 features (fields).
+
+
+
+
+2) QUESTION 2:
+
+# Mean_Std: Using 'grepl', the Mean_Std variable was created to include any field headers (from MergedData data.frame) which contain either "mean(" OR "std(" OR "subject" OR "activity".
+            The last 2 options were used to include ActivityID and SubjectID fields which will be later used for aggregation purposes.
+
+# MergedData2: Data.frame containing only the fields which header is included (i.e. TRUE) in Mean_Std variable. This new dataset now includes only 68 fields (and still 10,299 rows)
+
+
+
+
+3) QUESTION 3:
+
+# Activity_Labels: Data.frame containing Activity Names (as well as Activity IDs) from activity_labels.txt (excluding headers)
+
+* Descriptive names are then added to Activity_Labels dataset are added to Activity_Labels data.frame using colnames(Activity_Labels) <- c("activityID","activityName")
+
+# MergedData3: Merged Data.frame containing Master Dataset from Question 2 (MergedData2) plus the Activity Names field. This dataset has 69 fields (as Activity Name has now been merged)
+
+# MergedData4: Data.frame containing re-arranged fields from previous file (MergedData3). This data.frame contains 68 fields bacause Activity ID has been removed (as we now have Activity Name in the dataset)
+
+
+
+
+4) QUESTION 4:
+
+* Brackets () are removed from all measurement headers to tidy up data labels.
+  The headers naming convention used for signals is as follows: [time/frequency domain signal].[mean/std].[axial raw XYZ- if applicable]
+  COde used to tidy up headers is as follows: names(MergedData4) <- gsub("\\(\\)", "", names(MergedData4))
+
+
+
+
+5) QUESTION 5:
+
+# Agg_MergedData4: Data.frame containing aggregated tidy data set with the average of each variable for each activity and each subject.
+
+* As the aggregate function changes the names of the 2 fields used for aggregation to Group.n, original tidy names are changed back to "Subject ID" and "Activity Name"
+
+
+
+Final output from question 5 is then exported to txt. fileand saved in root directory Exports data to a comma delimited text file.
+This is the tidy dataset uploaded for this assignment.
+To read this tidy dataset, the following code can be used: read.csv("Aggregated_Merged_TidyData_GalaxyS.txt", sep="")
+
