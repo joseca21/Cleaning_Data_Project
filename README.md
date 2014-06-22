@@ -2,71 +2,79 @@
 
 First of all, it assumes the 'UCI HAR Dataset' folder is set as working directory in R (using setwd() to do this)
 
-###### QUESTION 1: Merges the training and the test sets to create one data set
+##### QUESTION 1: Merges the training and the test sets to create one data set
 
-**A: Reading and preparing test data.**
+###### A: Reading and preparing test data.
 
 *Step 1: Read Test set from 'test/X_test.txt' and assign data to data.frame Xtest_1 (with no headers)*
 
 Xtest_1 <- read.csv("./test/X_test.txt", header=F, sep="", comment.char ="", colClasses="numeric")
 
 *Step 2: Read List of all features (headers for Test/Train data) from 'features.txt' and assign data to data.frame called Header_Train_Test (with no headers)*
+
 Header_Train_Test <- read.csv("./features.txt", header=F, sep="")
 
 *Step 3: Transpose 2nd column -column $V2- in Header_Train_Test (containing headers) from columns to rows and assign transposed data to T_Header_Train_Set*
+
 T_Header_Train_Set <- t(Header_Train_Test$V2)
 
 *Step 4: Add transposed headers (i.e. T_Header_Train_Set) to Test set (i.e. Xtest_1)*
+
 colnames(Xtest_1) <- T_Header_Train_Set
 
 *Step 5: Read Test labels containing the activity IDs for Test set from 'test/y_test.txt' and assign data to data.frame ytest_1 (excluding headers)*
+
 ytest_1 <- read.csv("./test/y_test.txt", header=F, sep="", comment.char ="", colClasses="numeric")
 
 *Step 6: Read subject IDs containing subjects who peformed activities measured in Test set from 'test/subject_test.txt' and assign data to data.frame subjecttest_1 (with no headers)*
+
 subjecttest_1 <- read.csv("./test/subject_test.txt", header=F, sep="", comment.char ="", colClasses="numeric")
 
 *Step 7: Merge Subject IDs (subjecttest_1) with Activity IDs (ytest_1) and assign merged data to test_subj_activ. Then insert descriptive headers to data.frame*
+
 test_subj_activ <- cbind(subjecttest_1, ytest_1)
 colnames(test_subj_activ) <- c("subjectID","activityID")
 
 *Step 8: Merge dataset containing both Activity and subject IDs (test_subj_activ) with Test set (Xtest_1)*
+
 Xtest_2 <- cbind(test_subj_activ,Xtest_1)
 
-**B: Reading and preparing training data.**
-Step 1: Read Training set from 'train/X_train.txt' and assign data to data.frame Xtrain_1 (with no headers)
+
+###### B: Reading and preparing training data.
+
+*Step 1: Read Training set from 'train/X_train.txt' and assign data to data.frame Xtrain_1 (with no headers)*
 
 Xtrain_1 <- read.csv("./train/X_train.txt", header=F, sep="", comment.char ="", colClasses="numeric")
 
-Step 2: Add transposed headers (i.e. previously saved to T_Header_Train_Set) to Training set (i.e. Xtrain_1)
+*Step 2: Add transposed headers (i.e. previously saved to T_Header_Train_Set) to Training set (i.e. Xtrain_1)*
 
 colnames(Xtrain_1) <- T_Header_Train_Set
 
-Step 3: Read Test labels containing the activity IDs for Training set from 'train/y_train.txt' and assign data to data.frame ytrain_1 (with no headers)
+*Step 3: Read Test labels containing the activity IDs for Training set from 'train/y_train.txt' and assign data to data.frame ytrain_1 (with no headers)*
 
 ytrain_1 <- read.csv("./train/y_train.txt", header=F, sep="", comment.char ="", colClasses="numeric")
 
-Step 4: Read subject IDs containing subjects who peformed activities measured in Train set from 'train/subject_train.txt' and assign data to data.frame subjecttrain_1 (with no headers)
+*Step 4: Read subject IDs containing subjects who peformed activities measured in Train set from 'train/subject_train.txt' and assign data to data.frame subjecttrain_1 (with no headers)*
 
 subjecttrain_1 <- read.csv("./train/subject_train.txt", header=F, sep="", comment.char ="", colClasses="numeric")
 
-Step 5: Merge Subject IDs (subjecttrain_1) with Activity IDs (ytrain_1) and assign merged data to train_subj_activ. Then insert descriptive headers to data.frame
+*Step 5: Merge Subject IDs (subjecttrain_1) with Activity IDs (ytrain_1) and assign merged data to train_subj_activ. Then insert descriptive headers to data.frame*
 
 train_subj_activ <- cbind(subjecttrain_1, ytrain_1)
 colnames(train_subj_activ) <- c("subjectID","activityID")
 
-Step 6: Merge dataset containing both Activity and subject IDs (train_subj_activ) with Train set (Xtrain_1)
+*Step 6: Merge dataset containing both Activity and subject IDs (train_subj_activ) with Train set (Xtrain_1)*
 
 Xtrain_2 <- cbind(train_subj_activ,Xtrain_1)
 
 
-
-C: Merge Test and Training Data Sets into a Master Data set called MergedData
+###### C: Merge Test and Training Data Sets into a Master Data set called MergedData
 
 MergedData <- rbind(Xtest_2, Xtrain_2)
 
 
 
-QUESTION 2: Extracts only the measurements on the mean and standard deviation for each measurement.
+##### QUESTION 2: Extracts only the measurements on the mean and standard deviation for each measurement.
 Include any field header which contains either "mean(" or "std(" or "subject" or "activity"
 (last 2 options to include activityID and subjectID fields)
 Once all relevant fields are extracted in Mean_STd variable, a data.frame is created with the 68 fields selected and assigned to MergedData2
