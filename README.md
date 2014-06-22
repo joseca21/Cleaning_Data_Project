@@ -34,6 +34,7 @@ subjecttest_1 <- read.csv("./test/subject_test.txt", header=F, sep="", comment.c
 *Step 7: Merge Subject IDs (subjecttest_1) with Activity IDs (ytest_1) and assign merged data to test_subj_activ. Then insert descriptive headers to data.frame*
 
 test_subj_activ <- cbind(subjecttest_1, ytest_1)
+
 colnames(test_subj_activ) <- c("subjectID","activityID")
 
 *Step 8: Merge dataset containing both Activity and subject IDs (test_subj_activ) with Test set (Xtest_1)*
@@ -63,6 +64,7 @@ subjecttrain_1 <- read.csv("./train/subject_train.txt", header=F, sep="", commen
 *Step 5: Merge Subject IDs (subjecttrain_1) with Activity IDs (ytrain_1) and assign merged data to train_subj_activ. Then insert descriptive headers to data.frame*
 
 train_subj_activ <- cbind(subjecttrain_1, ytrain_1)
+
 colnames(train_subj_activ) <- c("subjectID","activityID")
 
 *Step 6: Merge dataset containing both Activity and subject IDs (train_subj_activ) with Train set (Xtrain_1)*
@@ -84,6 +86,7 @@ MergedData <- rbind(Xtest_2, Xtrain_2)
 Once all relevant fields are extracted in Mean_STd variable, a data.frame is created with the 68 fields selected and assigned to MergedData2*
 
 Mean_Std <- grepl("subject", names(MergedData), fixed=TRUE) | grepl("activity", names(MergedData), fixed=TRUE) | grepl("mean(", names(MergedData), fixed=TRUE) | grepl("std(", names(MergedData), fixed=TRUE)
+
 MergedData2 <- MergedData[, Mean_Std]
 
 
@@ -94,6 +97,7 @@ MergedData2 <- MergedData[, Mean_Std]
 Descriptive names are then added to Activity_Labels dataset*
 
 Activity_Labels <- read.csv("./activity_labels.txt", header=F, sep="")
+
 colnames(Activity_Labels) <- c("activityID","activityName")
 
 *Activity Names is then merged to Master Dataset (MergedData2) and a new master dataset (now containing 69 features) is assigned to MergedData3 dataset*
@@ -104,6 +108,7 @@ MergedData3 <- merge(Activity_Labels,MergedData2,by = "activityID")
 *New output is assigned to MergedData4 data.frame*
 
 New MergedData4 data.frame has now 68 fields (as ActivityID was removed)
+
 MergedData4 <- MergedData3[ , c(3,2,4:69)]
 
 
