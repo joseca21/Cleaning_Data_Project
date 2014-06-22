@@ -1,7 +1,7 @@
 **This is a README file which explains how the code to consolidate and clean the Samsung dataset works.**
 First of all, it assumes the 'UCI HAR Dataset' folder is set as working directory in R (using setwd() to do this)
 
-QUESTION 1: Merges the training and the test sets to create one data set
+#####QUESTION 1: Merges the training and the test sets to create one data set
 
 Step 1: Read Test set from 'test/X_test.txt' and assign data to data.frame Xtest_1 (with no headers)
 
