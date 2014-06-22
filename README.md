@@ -1,43 +1,37 @@
 **This is a README file which explains how the code to consolidate and clean the Samsung dataset works.**
+
 First of all, it assumes the 'UCI HAR Dataset' folder is set as working directory in R (using setwd() to do this)
 
 #####QUESTION 1: Merges the training and the test sets to create one data set
 
-Step 1: Read Test set from 'test/X_test.txt' and assign data to data.frame Xtest_1 (with no headers)
+**A: Reading and preparing test data.**
 
+*Step 1: Read Test set from 'test/X_test.txt' and assign data to data.frame Xtest_1 (with no headers)*
 Xtest_1 <- read.csv("./test/X_test.txt", header=F, sep="", comment.char ="", colClasses="numeric")
 
-Step 2: Read List of all features (headers for Test/Train data) from 'features.txt' and assign data to data.frame called Header_Train_Test (with no headers)
-
+*Step 2: Read List of all features (headers for Test/Train data) from 'features.txt' and assign data to data.frame called Header_Train_Test (with no headers)*
 Header_Train_Test <- read.csv("./features.txt", header=F, sep="")
 
-Step 3: Transpose 2nd column -column $V2- in Header_Train_Test (containing headers) from columns to rows and assign transposed data to T_Header_Train_Set
-
+*Step 3: Transpose 2nd column -column $V2- in Header_Train_Test (containing headers) from columns to rows and assign transposed data to T_Header_Train_Set*
 T_Header_Train_Set <- t(Header_Train_Test$V2)
 
-Step 4: Add transposed headers (i.e. T_Header_Train_Set) to Test set (i.e. Xtest_1)
-
+*Step 4: Add transposed headers (i.e. T_Header_Train_Set) to Test set (i.e. Xtest_1)*
 colnames(Xtest_1) <- T_Header_Train_Set
 
-Step 5: Read Test labels containing the activity IDs for Test set from 'test/y_test.txt' and assign data to data.frame ytest_1 (excluding headers)
-
+*Step 5: Read Test labels containing the activity IDs for Test set from 'test/y_test.txt' and assign data to data.frame ytest_1 (excluding headers)*
 ytest_1 <- read.csv("./test/y_test.txt", header=F, sep="", comment.char ="", colClasses="numeric")
 
-Step 6: Read subject IDs containing subjects who peformed activities measured in Test set from 'test/subject_test.txt' and assign data to data.frame subjecttest_1 (with no headers)
-
+*Step 6: Read subject IDs containing subjects who peformed activities measured in Test set from 'test/subject_test.txt' and assign data to data.frame subjecttest_1 (with no headers)*
 subjecttest_1 <- read.csv("./test/subject_test.txt", header=F, sep="", comment.char ="", colClasses="numeric")
 
-Step 7: Merge Subject IDs (subjecttest_1) with Activity IDs (ytest_1) and assign merged data to test_subj_activ. Then insert descriptive headers to data.frame
-
+*Step 7: Merge Subject IDs (subjecttest_1) with Activity IDs (ytest_1) and assign merged data to test_subj_activ. Then insert descriptive headers to data.frame*
 test_subj_activ <- cbind(subjecttest_1, ytest_1)
 colnames(test_subj_activ) <- c("subjectID","activityID")
 
-Step 8: Merge dataset containing both Activity and subject IDs (test_subj_activ) with Test set (Xtest_1)
-
+*Step 8: Merge dataset containing both Activity and subject IDs (test_subj_activ) with Test set (Xtest_1)*
 Xtest_2 <- cbind(test_subj_activ,Xtest_1)
 
-
-B: Reading and preparing training data.
+**B: Reading and preparing training data.**
 Step 1: Read Training set from 'train/X_train.txt' and assign data to data.frame Xtrain_1 (with no headers)
 
 Xtrain_1 <- read.csv("./train/X_train.txt", header=F, sep="", comment.char ="", colClasses="numeric")
