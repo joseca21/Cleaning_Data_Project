@@ -93,7 +93,7 @@ MergedData2 <- MergedData[, Mean_Std]
 
 ##### QUESTION 3: Uses descriptive activity names to name the activities in the data set
 
-*Activity names are read from activity_labels.txt and assigned to Activity_Labels data.frame
+*Activity names are read from activity_labels.txt and assigned to Activity_Labels data.frame.
 Descriptive names are then added to Activity_Labels dataset*
 
 Activity_Labels <- read.csv("./activity_labels.txt", header=F, sep="")
