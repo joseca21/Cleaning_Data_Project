@@ -2,6 +2,7 @@
 
 First of all, it assumes the 'UCI HAR Dataset' folder is set as working directory in R (using setwd() to do this)
 
+
 ##### QUESTION 1: Merges the training and the test sets to create one data set
 
 ###### A: Reading and preparing test data.
@@ -40,6 +41,7 @@ colnames(test_subj_activ) <- c("subjectID","activityID")
 Xtest_2 <- cbind(test_subj_activ,Xtest_1)
 
 
+
 ###### B: Reading and preparing training data.
 
 *Step 1: Read Training set from 'train/X_train.txt' and assign data to data.frame Xtrain_1 (with no headers)*
@@ -68,51 +70,61 @@ colnames(train_subj_activ) <- c("subjectID","activityID")
 Xtrain_2 <- cbind(train_subj_activ,Xtrain_1)
 
 
+
 ###### C: Merge Test and Training Data Sets into a Master Data set called MergedData
 
 MergedData <- rbind(Xtest_2, Xtrain_2)
 
 
 
+
 ##### QUESTION 2: Extracts only the measurements on the mean and standard deviation for each measurement.
-Include any field header which contains either "mean(" or "std(" or "subject" or "activity"
+*Include any field header which contains either "mean(" or "std(" or "subject" or "activity"
 (last 2 options to include activityID and subjectID fields)
-Once all relevant fields are extracted in Mean_STd variable, a data.frame is created with the 68 fields selected and assigned to MergedData2
+Once all relevant fields are extracted in Mean_STd variable, a data.frame is created with the 68 fields selected and assigned to MergedData2*
 
 Mean_Std <- grepl("subject", names(MergedData), fixed=TRUE) | grepl("activity", names(MergedData), fixed=TRUE) | grepl("mean(", names(MergedData), fixed=TRUE) | grepl("std(", names(MergedData), fixed=TRUE)
 MergedData2 <- MergedData[, Mean_Std]
 
 
-QUESTION 3: Uses descriptive activity names to name the activities in the data set
 
-Activity names are read from activity_labels.txt and assigned to Activity_Labels data.frame
-Descriptive names are then added to Activity_Labels dataset
+##### QUESTION 3: Uses descriptive activity names to name the activities in the data set
+
+*Activity names are read from activity_labels.txt and assigned to Activity_Labels data.frame
+Descriptive names are then added to Activity_Labels dataset*
 
 Activity_Labels <- read.csv("./activity_labels.txt", header=F, sep="")
 colnames(Activity_Labels) <- c("activityID","activityName")
 
-Activity Names is then merged to Master Dataset (MergedData2) and a new master dataset (now containing 69 features) is assigned to MergedData3 dataset
+*Activity Names is then merged to Master Dataset (MergedData2) and a new master dataset (now containing 69 features) is assigned to MergedData3 dataset*
+
 MergedData3 <- merge(Activity_Labels,MergedData2,by = "activityID")
 
-FIelds are then re-arranged in MergedData3 master dataset and ActivityID field is removed. 
-New output is assigned to MergedData4 data.frame
+*FIelds are then re-arranged in MergedData3 master dataset and ActivityID field is removed*
+*New output is assigned to MergedData4 data.frame*
+
 New MergedData4 data.frame has now 68 fields (as ActivityID was removed)
 MergedData4 <- MergedData3[ , c(3,2,4:69)]
 
 
-QUESTION 4: Appropriately labels the data set with descriptive variable names
 
-Brackets () are removed from all measurement headers to tidy up data labels
-The headers naming convention used for signals is as follows: [time/frequency domain signal]-[mean/std]-[axial raw XYZ]
+
+##### QUESTION 4: Appropriately labels the data set with descriptive variable names
+
+*Brackets () are removed from all measurement headers to tidy up data labels*
+*The headers naming convention used for signals is as follows: [time/frequency domain signal]-[mean/std]-[axial raw XYZ]*
+
 names(MergedData4) <- gsub("\\(\\)", "", names(MergedData4))
 
 
-QUESTION 5: Creates a second, independent tidy data set with the average of each variable for each activity and each subject
+##### QUESTION 5: Creates a second, independent tidy data set with the average of each variable for each activity and each subject
 
-Aggregated output is then assigned to Agg_MergedData4 data.frame
+*Aggregated output is then assigned to Agg_MergedData4 data.frame*
+
 Agg_MergedData4 <- aggregate(MergedData4[ , c(3:68)], by=list(factor(MergedData4$subjectID),MergedData4$activityName), FUN="mean", na.rm=TRUE)
 
-Final output from question 5 is then exported to txt. fileand saved in root directory
-Exports data to a comma delimited text file
-This is the tidy dataset uploaded for this assignment 
+**Final output from question 5 is then exported to txt. fileand saved in root directory**
+**Exports data to a comma delimited text file**
+**This is the tidy dataset uploaded for this assignment**
+
 write.table(Agg_MergedData4,file = "Aggregated_Merged_TidyData_GalaxyS.txt")
