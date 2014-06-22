@@ -2,11 +2,12 @@
 
 First of all, it assumes the 'UCI HAR Dataset' folder is set as working directory in R (using setwd() to do this)
 
-#####QUESTION 1: Merges the training and the test sets to create one data set
+###### QUESTION 1: Merges the training and the test sets to create one data set
 
 **A: Reading and preparing test data.**
 
 *Step 1: Read Test set from 'test/X_test.txt' and assign data to data.frame Xtest_1 (with no headers)*
+
 Xtest_1 <- read.csv("./test/X_test.txt", header=F, sep="", comment.char ="", colClasses="numeric")
 
 *Step 2: Read List of all features (headers for Test/Train data) from 'features.txt' and assign data to data.frame called Header_Train_Test (with no headers)*
