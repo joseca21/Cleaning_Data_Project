@@ -128,7 +128,7 @@ names(MergedData4) <- gsub("\\(\\)", "", names(MergedData4)) [Note escape charac
 
 Agg_MergedData4 <- aggregate(MergedData4[ , c(3:68)], by=list(factor(MergedData4$subjectID),MergedData4$activityName), FUN="mean", na.rm=TRUE)
 
-*As the aggregate function chnages the names of the 2 fields used for aggregation to Group.n, original tidy names are replaced*
+*As the aggregate function changes the names of the 2 fields used for aggregation to Group.n, original tidy names are replaced*
 
 names(Agg_MergedData4)[1] <- "Subject ID"
 names(Agg_MergedData4)[2] <- "Activity Name"
