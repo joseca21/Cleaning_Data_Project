@@ -126,6 +126,6 @@ Agg_MergedData4 <- aggregate(MergedData4[ , c(3:68)], by=list(factor(MergedData4
 **Final output from question 5 is then exported to txt. fileand saved in root directory**
 **Exports data to a comma delimited text file**
 
-### This is the tidy dataset uploaded for this assignment
+#### This is the tidy dataset uploaded for this assignment
 
 write.table(Agg_MergedData4,file = "Aggregated_Merged_TidyData_GalaxyS.txt")
