@@ -119,7 +119,7 @@ MergedData4 <- MergedData3[ , c(3,2,4:69)]
 *Brackets () are removed from all measurement headers to tidy up data labels.*
 *The headers naming convention used for signals is as follows: [time/frequency domain signal]-[mean/std]-[axial raw XYZ]*
 
-names(MergedData4) <- gsub("\\(\\)", "", names(MergedData4))
+names(MergedData4) <- gsub("\\\(\\\)", "", names(MergedData4))
 
 
 ##### QUESTION 5: Creates a second, independent tidy data set with the average of each variable for each activity and each subject
