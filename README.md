@@ -131,6 +131,7 @@ Agg_MergedData4 <- aggregate(MergedData4[ , c(3:68)], by=list(factor(MergedData4
 *As the aggregate function changes the names of the 2 fields used for aggregation to Group.n, original tidy names are replaced*
 
 names(Agg_MergedData4)[1] <- "Subject ID"
+
 names(Agg_MergedData4)[2] <- "Activity Name"
 
 **Final output from question 5 is then exported to txt. fileand saved in root directory**
