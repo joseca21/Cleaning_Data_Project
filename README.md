@@ -116,7 +116,7 @@ MergedData4 <- MergedData3[ , c(3,2,4:69)]
 
 ##### QUESTION 4: Appropriately labels the data set with descriptive variable names
 
-*Brackets () are removed from all measurement headers to tidy up data labels*
+*Brackets () are removed from all measurement headers to tidy up data labels.*
 *The headers naming convention used for signals is as follows: [time/frequency domain signal]-[mean/std]-[axial raw XYZ]*
 
 names(MergedData4) <- gsub("\\(\\)", "", names(MergedData4))
